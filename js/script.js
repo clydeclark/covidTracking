@@ -46,6 +46,7 @@ $(document).ready(function () {
 
     })
 
+    // queries for global population
     function getGlobalPop() {
 
         var settings = {
@@ -66,6 +67,7 @@ $(document).ready(function () {
 
     }
 
+    // queries for country population
     function getCountryPopulation(query) {
         var settings = {
             "async": true,
@@ -83,7 +85,7 @@ $(document).ready(function () {
         });
     }
 
-
+    // display chart
     var ctx = document.getElementById('global-chart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -121,6 +123,30 @@ $(document).ready(function () {
             }
         }
     });
+
+    getNews();
+
+    function getNews() {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://covid-19-news.p.rapidapi.com/v1/covid?lang=en&media=True&q=covid",
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "covid-19-news.p.rapidapi.com",
+                "x-rapidapi-key": "7890d205b1msh01e2a11ec28f854p1c50e9jsn12a3a11721e5"
+            }
+        }
+
+        $.ajax(settings).done(function (response) {
+            for (var i = 0; i < 4; i++) {
+                let randNum = Math.floor(Math.random() * 50);
+                $(".card .card-body .card-title").eq(i).html(response.articles[randNum].title);
+                $(".card .card-body .card-text").eq(i).html(response.articles[randNum].summary);
+            }
+            console.log(response.articles);
+        });
+    }
 
     // function countryCovid(country) {
     //     for (var i = 0; i < 4; i++) {
