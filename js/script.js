@@ -143,6 +143,7 @@ $(document).ready(function () {
                 let randNum = Math.floor(Math.random() * 50);
                 $(".card .card-body .card-title").eq(i).html(response.articles[randNum].title);
                 $(".card .card-body .card-text").eq(i).html(response.articles[randNum].summary);
+                $(".card .card-body .btn-primary").eq(i).attr("href", response.articles[randNum].link);
             }
             console.log(response.articles);
         });
